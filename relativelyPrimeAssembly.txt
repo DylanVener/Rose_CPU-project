@@ -1,0 +1,63 @@
+	readport
+	push
+	settop
+	pushi 2 
+loop: 
+        pop #duplicates the stuff at the top of the stack
+	dup
+	push
+	peek
+	tts
+	pra 3 #pushes the return address
+	tts
+	push #stack = [n,m,ra,n,m
+	j gcd #checks if returned value == 1
+	push
+	pushi 1
+	eq
+	bt endLoop
+	addi 1
+	j loop
+endLoop: 
+        pop
+	dlt
+	j output
+gcd: 
+        tts #if a == 0
+	dup
+	iszero #stack = [b,a,a==0
+	bt return
+gcdLoop: 
+        tts #while b != 0, stack = [a,b
+	dup
+	iszero
+	bt return
+	tts
+	peek
+	tts
+	dup
+	push
+	tts #stack = [a,b,a,b
+	slt
+	bf else #stack = [a,b
+	peek
+	tts
+	push
+	tts
+	sub
+	j gcdLoop
+else: 
+        pop
+	dup
+	push
+	sub
+	tts
+	j gcdLoop
+return: 
+        dlt
+	pop
+	jtos
+output: 
+        writedisp
+
+	
